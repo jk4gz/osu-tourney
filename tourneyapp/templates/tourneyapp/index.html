@@ -1,0 +1,9 @@
+{% if map_list %}
+    <ul>
+    {% for map in map_list %}
+        <li>Title: {{ map.title }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No maps are available.</p>
+{% endif %}
