@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.template import loader
 import requests
-from pprint import pprint
 from os import getenv
 from dotenv import load_dotenv
+from .forms import MapDataForm
+from django.http import HttpResponseRedirect
 
 from .models import Mapdata
 
@@ -23,10 +24,14 @@ def get_token():
 
     return response.json().get('access_token')
 
-def getMapInfo():
+def getMapInfo(data):
     token = get_token()
 
-    beatmap = 'https://osu.ppy.sh/beatmapsets/352570#osu/786018'
+    # beatmap = 'https://osu.ppy.sh/beatmapsets/352570#osu/786018'
+    beatmap = data
+    if beatmap is None:
+        print('yeet')
+        return None
     map_id = beatmap[beatmap.rfind('/')+1:]
     print(map_id)
 
@@ -50,8 +55,22 @@ def getMapInfo():
 def index(request):
     map_list = Mapdata.objects.all()
     template = loader.get_template('tourneyapp/index.html')
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        mapform = MapDataForm(request.POST)
+        # check whether it's valid:
+        if mapform.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/thanks/')
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        mapform = MapDataForm()
     context = {
         'map_list': map_list,
-        'getMapInfo': getMapInfo,
+        'getMapInfo': getMapInfo(mapform.data.get('map_link')),
+        'form': mapform,
     }
     return render(request, 'tourneyapp/index.html', context)
