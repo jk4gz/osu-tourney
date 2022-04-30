@@ -30,7 +30,6 @@ def getMapInfo(data):
     # beatmap = 'https://osu.ppy.sh/beatmapsets/352570#osu/786018'
     beatmap = data
     if beatmap is None:
-        print('yeet')
         return None
     map_id = beatmap[beatmap.rfind('/')+1:]
     print(map_id)
@@ -50,10 +49,10 @@ def getMapInfo(data):
     beatmapset_data = response.json()
 
     # pprint(beatmapset_data, indent=2)
-    return(beatmapset_data['beatmapset']['creator'])
+    return(beatmapset_data['beatmapset'])
 
 def index(request):
-    map_list = Mapdata.objects.all()
+    # map_list = Mapdata.objects.all()
     template = loader.get_template('tourneyapp/index.html')
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -64,13 +63,18 @@ def index(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return HttpResponseRedirect('/thanks/')
+            map_link = mapform.cleaned_data['map_link']
+        try:
+            api_response = getMapInfo(map_link)
+        except Exception as e:
+            print("whoopsie")
     # if a GET (or any other method) we'll create a blank form
     else:
         mapform = MapDataForm()
+        api_response = ""
     context = {
-        'map_list': map_list,
-        'getMapInfo': getMapInfo(mapform.data.get('map_link')),
+        #'map_list': map_list,
+        'getMapInfo': api_response,
         'form': mapform,
     }
     return render(request, 'tourneyapp/index.html', context)

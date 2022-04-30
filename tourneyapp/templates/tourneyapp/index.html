@@ -1,14 +1,6 @@
-<!-- {% if map_list %}
-    <ul>
-    {% for map in map_list %}
-        <li>Title: {{ map.title }}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No maps are available.</p>
-{% endif %} -->
-<form>
+<form action="/tourneyapp/query/" method="post">
+    {% csrf_token %}
     {{ form }}
-    <input type="submit" value="OK">
+    <input type="submit" value="SUBMIT"/>
 </form>
-<h1>{{ getMapInfo }}</h1>
+<h1>{{getMapInfo}}</h1>
