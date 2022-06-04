@@ -3,4 +3,12 @@
     {{ form }}
     <input type="submit" value="SUBMIT"/>
 </form>
-<h1>{{getMapInfo}}</h1>
+{% if getMapInfo %}
+    <h1>SR: {{getMapInfo.0}}</h1>
+    <h1>BPM: {{getMapInfo.1}}</h1>
+    <h1>Length: {{getMapInfo.2}}</h1>
+    <h1>CS: {{getMapInfo.3}}</h1>
+    <h1>AR: {{getMapInfo.4}}</h1>
+    <h1>OD: {{getMapInfo.5}}</h1>
+    <h1>ID: {{getMapInfo.6}}</h1>
+{% endif %}

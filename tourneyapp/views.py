@@ -46,10 +46,13 @@ def getMapInfo(data):
     # response = requests.get(f'{API_URL}/beatmaps/'+map_id, params=params, headers=headers)
     response = requests.get(f'{API_URL}/beatmaps/'+map_id, params=params, headers=headers)
     
-    beatmapset_data = response.json()
+    beatmapset_full = response.json()
 
-    # pprint(beatmapset_data, indent=2)
-    return(beatmapset_data['beatmapset'])
+    m, s = divmod(beatmapset_full['total_length'], 60)
+    time_string = '{:02d}:{:02d}'.format(m, s)
+    beatmapset_data = [beatmapset_full['difficulty_rating'], beatmapset_full['bpm'], time_string,
+                    beatmapset_full['cs'], beatmapset_full['ar'], beatmapset_full['accuracy'], beatmapset_full['id']]
+    return(beatmapset_data)
 
 def index(request):
     # map_list = Mapdata.objects.all()
