@@ -1,14 +1,40 @@
-<form action="/tourneyapp/query/" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="SUBMIT"/>
-</form>
-{% if getMapInfo %}
-    <h1>SR: {{getMapInfo.0}}</h1>
-    <h1>BPM: {{getMapInfo.1}}</h1>
-    <h1>Length: {{getMapInfo.2}}</h1>
-    <h1>CS: {{getMapInfo.3}}</h1>
-    <h1>AR: {{getMapInfo.4}}</h1>
-    <h1>OD: {{getMapInfo.5}}</h1>
-    <h1>ID: {{getMapInfo.6}}</h1>
-{% endif %}
+<html>
+    <head>
+        {# Load the tag library #}
+        {% load django_bootstrap5 %}
+
+        {# Load CSS and JavaScript #}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+
+        {# Display django.contrib.messages as Bootstrap alerts #}
+        {% bootstrap_messages %}
+    </head>
+    <body>
+        <form action="/tourneyapp/query/" method="post">
+            {% csrf_token %}
+            <table>
+                {{ form }}
+            </table>
+            {% bootstrap_button button_type="submit" content="OK" %}
+        </form>
+        {% if nm1 %}
+            <h3>SR: {{ nm1.0 }}</h3>
+            <h3>BPM: {{ nm1.1 }}</h3>
+            <h3>Length: {{ nm1.2 }}</h3>
+            <h3>CS: {{ nm1.3 }}</h3>
+            <h3>AR: {{ nm1.4 }}</h3>
+            <h3>OD: {{ nm1.5 }}</h3>
+            <h3>ID: {{ nm1.6 }}</h3>
+        {% endif %}
+        {% if nm2 %}
+            <h3>SR: {{ nm2.0 }}</h3>
+            <h3>BPM: {{ nm2.1 }}</h3>
+            <h3>Length: {{ nm2.2 }}</h3>
+            <h3>CS: {{ nm2.3 }}</h3>
+            <h3>AR: {{ nm2.4 }}</h3>
+            <h3>OD: {{ nm2.5 }}</h3>
+            <h3>ID: {{ nm2.6 }}</h3>
+        {% endif %}
+    </body>
+</html>

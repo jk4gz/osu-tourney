@@ -32,7 +32,6 @@ def getMapInfo(data):
     if beatmap is None:
         return None
     map_id = beatmap[beatmap.rfind('/')+1:]
-    print(map_id)
 
     headers = {
         'Content-Type': 'application/json',
@@ -55,10 +54,11 @@ def getMapInfo(data):
     return(beatmapset_data)
 
 def index(request):
-    # map_list = Mapdata.objects.all()
     template = loader.get_template('tourneyapp/index.html')
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
+        nm1_response = ""
+        nm2_response = ""
         # create a form instance and populate it with data from the request:
         mapform = MapDataForm(request.POST)
         # check whether it's valid:
@@ -66,18 +66,23 @@ def index(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            map_link = mapform.cleaned_data['map_link']
+            nm1_link = mapform.cleaned_data['nm1_link']
+            nm2_link = mapform.cleaned_data['nm2_link']
         try:
-            api_response = getMapInfo(map_link)
+            if nm1_link != "":
+                nm1_response = getMapInfo(nm1_link)
+            if nm2_link != "":
+                nm2_response = getMapInfo(nm2_link)
         except Exception as e:
             print("whoopsie")
     # if a GET (or any other method) we'll create a blank form
     else:
         mapform = MapDataForm()
-        api_response = ""
+        nm1_response = ""
+        nm2_response = ""
     context = {
-        #'map_list': map_list,
-        'getMapInfo': api_response,
+        'nm1': nm1_response,
+        'nm2': nm2_response,
         'form': mapform,
     }
     return render(request, 'tourneyapp/index.html', context)
