@@ -49,8 +49,10 @@ def getMapInfo(data):
 
     m, s = divmod(beatmapset_full['total_length'], 60)
     time_string = '{:02d}:{:02d}'.format(m, s)
+    beatmmap_title = beatmapset_full['beatmapset']['artist'] + " - " + beatmapset_full['beatmapset']['title'] + " [" + beatmapset_full['version']+ "]" + " (" + beatmapset_full['beatmapset']['creator'] + ")"
     beatmapset_data = [beatmapset_full['difficulty_rating'], beatmapset_full['bpm'], time_string,
-                    beatmapset_full['cs'], beatmapset_full['ar'], beatmapset_full['accuracy'], beatmapset_full['id']]
+                    beatmapset_full['cs'], beatmapset_full['ar'], beatmapset_full['accuracy'], beatmapset_full['id'], beatmmap_title]
+    print(beatmapset_full['beatmapset']['covers']['card'])
     return(beatmapset_data)
 
 def index(request):
