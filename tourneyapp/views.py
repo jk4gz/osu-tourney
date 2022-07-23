@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 from .forms import MapDataForm
 from django.http import HttpResponseRedirect
 
-from .models import Mapdata
-
 API_URL = 'https://osu.ppy.sh/api/v2'
 TOKEN_URL = 'https://osu.ppy.sh/oauth/token'
 load_dotenv()
@@ -52,7 +50,7 @@ def getMapInfo(data):
     beatmmap_title = beatmapset_full['beatmapset']['artist'] + " - " + beatmapset_full['beatmapset']['title'] + " [" + beatmapset_full['version']+ "]" + " (" + beatmapset_full['beatmapset']['creator'] + ")"
     beatmapset_data = [beatmapset_full['difficulty_rating'], beatmapset_full['bpm'], time_string,
                     beatmapset_full['cs'], beatmapset_full['ar'], beatmapset_full['accuracy'], beatmapset_full['id'], beatmmap_title]
-    print(beatmapset_full['beatmapset']['covers']['card'])
+    #print(beatmapset_full['beatmapset']['covers']['card'])
     return(beatmapset_data)
 
 def index(request):
@@ -70,11 +68,33 @@ def index(request):
             # redirect to a new URL:
             nm1_link = mapform.cleaned_data['nm1_link']
             nm2_link = mapform.cleaned_data['nm2_link']
+            # nm3_link = mapform.cleaned_data['nm3_link']
+            # nm4_link = mapform.cleaned_data['nm4_link']
+            # nm5_link = mapform.cleaned_data['nm5_link']
+            # nm6_link = mapform.cleaned_data['nm6_link']
+            # hd1_link = mapform.cleaned_data['hd1_link']
+            # hd2_link = mapform.cleaned_data['hd2_link']
+            # hd3_link = mapform.cleaned_data['hd3_link']
+            
         try:
             if nm1_link != "":
                 nm1_response = getMapInfo(nm1_link)
             if nm2_link != "":
                 nm2_response = getMapInfo(nm2_link)
+            # if nm3_link != "":
+            #     nm3_response = getMapInfo(nm3_link)
+            # if nm4_link != "":
+            #     nm4_response = getMapInfo(nm4_link)
+            # if nm5_link != "":
+            #     nm5_response = getMapInfo(nm5_link)
+            # if nm6_link != "":
+            #     nm6_response = getMapInfo(nm6_link)
+            # if hd1_link != "":
+            #     hd1_response = getMapInfo(hd1_link)
+            # if hd2_link != "":
+            #     hd2_response = getMapInfo(hd2_link)
+            # if hd3_link != "":
+            #     hd3_response = getMapInfo(hd3_link)
         except Exception as e:
             print("whoopsie")
     # if a GET (or any other method) we'll create a blank form
@@ -82,6 +102,13 @@ def index(request):
         mapform = MapDataForm()
         nm1_response = ""
         nm2_response = ""
+        # nm3_response = ""
+        # nm4_response = ""
+        # nm5_response = ""
+        # nm6_response = ""
+        # hd1_response = ""
+        # hd2_response = ""
+        # hd3_response = ""
     context = {
         'nm1': nm1_response,
         'nm2': nm2_response,
