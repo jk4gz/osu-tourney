@@ -59,6 +59,26 @@ def index(request):
     if request.method == 'POST':
         nm1_response = ""
         nm2_response = ""
+        nm3_response = ""
+        nm4_response = ""
+        nm5_response = ""
+        nm6_response = ""
+        # HD
+        hd1_response = ""
+        hd2_response = ""
+        hd3_response = ""
+        # HR
+        hr1_response = ""
+        hr2_response = ""
+        hr3_response = ""
+        # DT
+        dt1_response = ""
+        dt2_response = ""
+        dt3_response = ""
+        dt4_response = ""
+        # TB
+        tb_response = ""
+
         # create a form instance and populate it with data from the request:
         mapform = MapDataForm(request.POST)
         # check whether it's valid:
